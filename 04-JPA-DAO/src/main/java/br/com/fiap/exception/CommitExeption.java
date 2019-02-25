@@ -2,11 +2,6 @@ package br.com.fiap.exception;
 
 public class CommitExeption extends Exception {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	public CommitExeption() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -32,5 +27,5 @@ public class CommitExeption extends Exception {
 		// TODO Auto-generated constructor stub
 	}
 
-	
+
 }

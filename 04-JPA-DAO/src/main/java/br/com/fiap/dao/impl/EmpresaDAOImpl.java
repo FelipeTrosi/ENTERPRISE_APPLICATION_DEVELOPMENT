@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 
 import br.com.fiap.dao.EmpresaDAO;
 import br.com.fiap.entity.Empresa;
+import br.com.fiap.exception.CodigoInexistenteException;
 import br.com.fiap.exception.CommitExeption;
 
 public class EmpresaDAOImpl implements EmpresaDAO {
@@ -22,8 +23,11 @@ public class EmpresaDAOImpl implements EmpresaDAO {
 		em.merge(empresa);
 	}
 
-	public void excluir(int codigo) {
+	public void excluir(int codigo) throws CodigoInexistenteException {
 		Empresa empresa = em.find(Empresa.class, codigo);
+		if(empresa == null) {
+			throw new CodigoInexistenteException();
+		}
 		em.remove(empresa);
 	}
 

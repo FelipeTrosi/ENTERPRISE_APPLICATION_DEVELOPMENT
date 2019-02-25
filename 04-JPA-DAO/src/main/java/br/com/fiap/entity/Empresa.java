@@ -1,6 +1,7 @@
 package br.com.fiap.entity;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -96,14 +97,27 @@ public class Empresa {
 		this.cnpj = cnpj;
 	}
 
-	public Empresa() {
-		
+	public Empresa() {		
 	}
 
-	public Empresa(String nomeFantasia, Status status, String cnpj) {
+	public Empresa(String nomeFantasia, Calendar dataAbertura, Status status, String cnpj) {
+		super();
 		this.nomeFantasia = nomeFantasia;
+		this.dataAbertura = dataAbertura;
 		this.status = status;
 		this.cnpj = cnpj;
 	}
+
+	public Empresa(int codigo, String nomeFantasia, Calendar dataAbertura, Status status, String cnpj) {
+		super();
+		this.codigo = codigo;
+		this.nomeFantasia = nomeFantasia;
+		this.dataAbertura = dataAbertura;
+		this.status = status;
+		this.cnpj = cnpj;
+	}
+	
+
+	
 		
 }
