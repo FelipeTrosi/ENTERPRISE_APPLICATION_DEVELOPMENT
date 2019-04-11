@@ -13,14 +13,17 @@ import br.com.fiap.entity.Genero;
 public class CadastroTeste {
 
 	public static void main(String[] args) {
-		//Criar um gerenciador de entidades
-		EntityManagerFactory fabrica = Persistence.createEntityManagerFactory("CLIENTE_ORACLE");
-	
-		//Depois a fabrica cria um entityManager
+		//Criar um gerenciador de entidades:
+		//Primeiro cria a fábrica:
+		EntityManagerFactory fabrica = 
+			Persistence.createEntityManagerFactory("CLIENTE_ORACLE");
+		//Depois, a fabrica cria os Entity Manager
 		EntityManager em = fabrica.createEntityManager();
 		
-		Cliente cliente = new Cliente("Jubileu", new GregorianCalendar(1990,Calendar.FEBRUARY,4)
-				,"141-236-659.99", Genero.MASCULINO, true);
+		//Instanciar o cliente
+		Cliente cliente = new Cliente("Marcos",
+				new GregorianCalendar(2000, Calendar.MARCH, 2),
+				"123.132.123-99", Genero.MASCULINO, null, true);
 		
 		//Cadastrar o cliente
 		em.persist(cliente);
@@ -32,4 +35,11 @@ public class CadastroTeste {
 		em.close();
 		fabrica.close();
 	}
+	
 }
+
+
+
+
+
+

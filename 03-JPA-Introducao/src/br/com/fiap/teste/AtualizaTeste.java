@@ -11,15 +11,17 @@ import br.com.fiap.entity.Cliente;
 import br.com.fiap.entity.Genero;
 
 public class AtualizaTeste {
+
 	public static void main(String[] args) {
-		EntityManagerFactory fabrica = Persistence.createEntityManagerFactory("CLIENTE_ORACLE");
+		EntityManagerFactory fabrica = 
+				Persistence.createEntityManagerFactory("CLIENTE_ORACLE");
 		EntityManager em = fabrica.createEntityManager();
-		
+			
 		//Atualizar um cliente
-		//Instanciar um cliente com id que existe no banco
-		
-		Cliente cliente = new Cliente(4, "Biquera", new GregorianCalendar(1999,Calendar.AUGUST,1)
-				,"513-201-038.55", Genero.MASCULINO, true);
+		//Instanciar um cliente com um Id que existe no Banco
+		Cliente cliente = new Cliente(1, "Bolsonaro", 
+				new GregorianCalendar(1970, Calendar.AUGUST, 2), 
+				"456.564.645-78", Genero.MASCULINO, null, false);
 		
 		em.merge(cliente);
 		
@@ -28,7 +30,11 @@ public class AtualizaTeste {
 		
 		em.close();
 		fabrica.close();
-		
 	}
-
+	
 }
+
+
+
+
+

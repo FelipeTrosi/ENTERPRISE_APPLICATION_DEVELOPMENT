@@ -5,13 +5,14 @@ import javax.persistence.EntityManager;
 import br.com.fiap.dao.EmpresaDAO;
 import br.com.fiap.entity.Empresa;
 import br.com.fiap.exception.CodigoInexistenteException;
-import br.com.fiap.exception.CommitExeption;
+import br.com.fiap.exception.CommitException;
 
 public class EmpresaDAOImpl implements EmpresaDAO {
 
 	private EntityManager em;
-
+	
 	public EmpresaDAOImpl(EntityManager em) {
+		super();
 		this.em = em;
 	}
 
@@ -25,7 +26,7 @@ public class EmpresaDAOImpl implements EmpresaDAO {
 
 	public void excluir(int codigo) throws CodigoInexistenteException {
 		Empresa empresa = em.find(Empresa.class, codigo);
-		if(empresa == null) {
+		if (empresa == null) {
 			throw new CodigoInexistenteException();
 		}
 		em.remove(empresa);
@@ -36,15 +37,17 @@ public class EmpresaDAOImpl implements EmpresaDAO {
 		return empresa;
 	}
 
-	public void commit() throws CommitExeption{
+	public void commit() throws CommitException {
 		try {
 			em.getTransaction().begin();
 			em.getTransaction().commit();
-		} catch (Exception e) {
+		}catch(Exception e) {
 			e.printStackTrace();
 			em.getTransaction().rollback();
-			throw new CommitExeption();
+			throw new CommitException();
 		}
 	}
 
 }
+
+

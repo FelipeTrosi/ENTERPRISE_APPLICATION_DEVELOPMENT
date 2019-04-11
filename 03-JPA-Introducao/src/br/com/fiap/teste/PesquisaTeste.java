@@ -9,23 +9,32 @@ import br.com.fiap.entity.Cliente;
 public class PesquisaTeste {
 
 	public static void main(String[] args) {
-		EntityManagerFactory fabrica = Persistence.createEntityManagerFactory("CLIENTE_ORACLE");
+		EntityManagerFactory fabrica = 
+				Persistence.createEntityManagerFactory("CLIENTE_ORACLE");
+
 		EntityManager em = fabrica.createEntityManager();
 		
-		// Pesquisar um cliente com codigo 1
-		Cliente cliente = em.find(Cliente.class, 3);
+		//Pesquisar um cliente com código 1
+		Cliente cliente = em.find(Cliente.class, 1);
 		
 		System.out.println(cliente.getNome());
 		
-		cliente.setNome("Eu");
+		//Modificar o nome no banco de dados
+		cliente.setNome("Francisco");
 		
 		em.getTransaction().begin();
 		em.getTransaction().commit();
 		
-		
-		
 		em.close();
 		fabrica.close();
 	}
-
+	
 }
+
+
+
+
+
+
+
+

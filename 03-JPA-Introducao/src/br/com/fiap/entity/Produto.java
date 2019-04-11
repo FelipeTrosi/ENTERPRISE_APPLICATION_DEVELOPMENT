@@ -1,6 +1,7 @@
 package br.com.fiap.entity;
 
 import java.util.Calendar;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,22 +15,23 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name="T_PRODUTO")
-@SequenceGenerator(name="produto",sequenceName="SQ_T_PRODUTO",allocationSize=1)
-public class Produto {	
-	
+@SequenceGenerator(name="produto", sequenceName="SQ_T_PRODUTO",allocationSize=1)
+public class Produto {
+
 	@Id
 	@Column(name="cd_produto")
-	@GeneratedValue(generator="produto",strategy=GenerationType.SEQUENCE)	
+	@GeneratedValue(generator="produto",strategy=GenerationType.SEQUENCE)
 	private int codigo;
-
-	@Column(name="nm_produto", nullable=false, length=50)
+	
+	@Column(name="nm_produto", nullable = false, length=50)
 	private String nome;
 	
-	@Column(name="qt_produto", nullable=false)
+	@Column(name="qt_produto", nullable = false)
 	private int quantidade;
 	
 	@Column(name="ds_estado")
@@ -37,27 +39,56 @@ public class Produto {
 	private Estado estado;
 	
 	@Column(name="dt_validade")
-	@Temporal(TemporalType.DATE)//Somente data
+	@Temporal(TemporalType.DATE)//Somente a data
 	private Calendar dataValidade;
-		
+	
 	@Column(name="dt_fabricacao")
-	@Temporal(TemporalType.DATE)//Somente data
+	@Temporal(TemporalType.DATE) //Somente a data
 	private Calendar dataFabricacao;
 	
 	@Column(updatable=false)
 	@Temporal(TemporalType.TIMESTAMP)//Data e hora
-	@CreationTimestamp//cria automaticamente a data no cadastro
+	@CreationTimestamp//cria automáticamente a data no cadastro
 	private Calendar dataCadastro;
 	
 	@Column(name="vl_produto", nullable=false)
 	private float preco;
 	
-	@Transient//nao sera uma coluna na base de dados
+	@Transient //não será coluna na base de dados
 	private int idade;
-
-	@Lob
+	
+	@Lob	
 	private byte[] imagem;
 	
+	public Produto() {
+		super();
+	}
+
+	public Produto(String nome, int quantidade, Estado estado, Calendar dataValidade, Calendar dataFabricacao,
+			float preco, byte[] imagem) {
+		super();
+		this.nome = nome;
+		this.quantidade = quantidade;
+		this.estado = estado;
+		this.dataValidade = dataValidade;
+		this.dataFabricacao = dataFabricacao;
+		this.preco = preco;
+		this.imagem = imagem;
+	}
+	
+	public Produto(int codigo, String nome, int quantidade, Estado estado, Calendar dataValidade,
+			Calendar dataFabricacao, float preco, byte[] imagem) {
+		super();
+		this.codigo = codigo;
+		this.nome = nome;
+		this.quantidade = quantidade;
+		this.estado = estado;
+		this.dataValidade = dataValidade;
+		this.dataFabricacao = dataFabricacao;
+		this.preco = preco;
+		this.imagem = imagem;
+	}
+
 	public int getCodigo() {
 		return codigo;
 	}
@@ -137,54 +168,17 @@ public class Produto {
 	public void setImagem(byte[] imagem) {
 		this.imagem = imagem;
 	}
-
-	public Produto() {
-		super();
-	}
-	
-	
-	
-	public Produto(int codigo, String nome, int quantidade, Estado estado, Calendar dataValidade,
-			Calendar dataFabricacao, float preco, byte[] imagem) {
-		super();
-		this.codigo = codigo;
-		this.nome = nome;
-		this.quantidade = quantidade;
-		this.estado = estado;
-		this.dataValidade = dataValidade;
-		this.dataFabricacao = dataFabricacao;
-		this.preco = preco;
-		this.imagem = imagem;
-	}
-
-	public Produto(String nome, int quantidade, Estado estado, Calendar dataValidade, Calendar dataFabricacao,
-			float preco, byte[] imagem) {
-		super();
-		this.nome = nome;
-		this.quantidade = quantidade;
-		this.estado = estado;
-		this.dataValidade = dataValidade;
-		this.dataFabricacao = dataFabricacao;
-		this.preco = preco;
-		this.imagem = imagem;
-	}
-
-	public Produto(int codigo, String nome, int quantidade, Estado estado, Calendar dataValidade,
-			Calendar dataFabricacao, Calendar dataCadastro, float preco, int idade, byte[] imagem) {
-		super();
-		this.codigo = codigo;
-		this.nome = nome;
-		this.quantidade = quantidade;
-		this.estado = estado;
-		this.dataValidade = dataValidade;
-		this.dataFabricacao = dataFabricacao;
-		this.dataCadastro = dataCadastro;
-		this.preco = preco;
-		this.idade = idade;
-		this.imagem = imagem;
-	}
-	
-	
-
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+

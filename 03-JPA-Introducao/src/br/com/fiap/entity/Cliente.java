@@ -2,7 +2,6 @@ package br.com.fiap.entity;
 
 import java.util.Calendar;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -23,29 +22,29 @@ import org.hibernate.annotations.CreationTimestamp;
 @Table(name="T_CLIENTE")
 @SequenceGenerator(name="cliente",sequenceName="SQ_T_CLIENTE",allocationSize=1)
 public class Cliente {
-	
+
 	@Id
 	@Column(name="cd_cliente")
 	@GeneratedValue(generator="cliente",strategy=GenerationType.SEQUENCE)
 	private int codigo;
 	
-	@Column(name="nm_cliente", nullable=false,length=100)
+	@Column(name="nm_cliente",nullable=false,length=100)
 	private String nome;
 	
-	@Temporal(TemporalType.DATE)	
-	@Column(name="dt_nacimento")
+	@Temporal(TemporalType.DATE)
+	@Column(name="dt_nascimento")
 	private Calendar dataNascimento;
 	
 	@Column(name="nr_cpf",length=14)
 	private String cpf;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name="ds_genero", nullable=false)
+	@Column(name="ds_genero",nullable=false)
 	private Genero genero;
 	
-	@Column(name="dt_cadastro",updatable=false)
-	@Temporal(TemporalType.TIMESTAMP)
 	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="dt_cadastro",updatable=false)
 	private Calendar dataCadastro;
 	
 	@Lob
@@ -58,6 +57,35 @@ public class Cliente {
 	@Transient
 	private long numeroCartao;
 	
+	public Cliente() {
+		super();
+	}
+
+	public Cliente(int codigo, String nome, Calendar dataNascimento, String cpf, Genero genero, byte[] foto,
+			boolean vip) {
+		super();
+		this.codigo = codigo;
+		this.nome = nome;
+		this.dataNascimento = dataNascimento;
+		this.cpf = cpf;
+		this.genero = genero;
+		this.foto = foto;
+		this.vip = vip;
+	}
+
+
+
+	public Cliente(String nome, Calendar dataNascimento, String cpf, Genero genero, byte[] foto, boolean vip) {
+		super();
+		this.nome = nome;
+		this.dataNascimento = dataNascimento;
+		this.cpf = cpf;
+		this.genero = genero;
+		this.foto = foto;
+		this.vip = vip;
+	}
+
+
 
 	public int getCodigo() {
 		return codigo;
@@ -122,57 +150,23 @@ public class Cliente {
 	public void setVip(boolean vip) {
 		this.vip = vip;
 	}
-	
-	public Cliente() {
-		super();
+
+	public long getNumeroCartao() {
+		return numeroCartao;
 	}
 
-	public Cliente(String nome, Calendar dataNascimento, String cpf, Genero genero, byte[] foto,
-			boolean vip, long numeroCartao) {
-		super();
-		this.nome = nome;
-		this.dataNascimento = dataNascimento;
-		this.cpf = cpf;
-		this.genero = genero;		
-		this.foto = foto;
-		this.vip = vip;
+	public void setNumeroCartao(long numeroCartao) {
 		this.numeroCartao = numeroCartao;
 	}
-
-	public Cliente(int codigo, String nome, Calendar dataNascimento, String cpf, Genero genero, Calendar dataCadastro,
-			byte[] foto, boolean vip) {
-		super();
-		this.codigo = codigo;
-		this.nome = nome;
-		this.dataNascimento = dataNascimento;
-		this.cpf = cpf;
-		this.genero = genero;
-		this.dataCadastro = dataCadastro;
-		this.foto = foto;
-		this.vip = vip;
-	}
-
-	public Cliente(String nome, Calendar dataNascimento, String cpf, Genero genero, boolean vip) {
-		super();
-		this.nome = nome;
-		this.dataNascimento = dataNascimento;
-		this.cpf = cpf;
-		this.genero = genero;
-		this.vip = vip;
-	}
-	public Cliente(int codigo, String nome, Calendar dataNascimento, String cpf, Genero genero, boolean vip) {
-		super();
-		this.codigo = codigo;
-		this.nome = nome;
-		this.dataNascimento = dataNascimento;
-		this.cpf = cpf;
-		this.genero = genero;
-		this.vip = vip;
-	}
-
-
 	
-	
-	
-
 }
+
+
+
+
+
+
+
+
+
+

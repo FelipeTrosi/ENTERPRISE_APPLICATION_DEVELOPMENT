@@ -2,10 +2,10 @@ package br.com.fiap.dao;
 
 import br.com.fiap.entity.Empresa;
 import br.com.fiap.exception.CodigoInexistenteException;
-import br.com.fiap.exception.CommitExeption;
+import br.com.fiap.exception.CommitException;
 
 public interface EmpresaDAO {
-	
+
 	void cadastrar(Empresa empresa);
 	
 	void atualizar(Empresa empresa);
@@ -14,5 +14,11 @@ public interface EmpresaDAO {
 	
 	Empresa pesquisar(int codigo);
 	
-	void commit() throws CommitExeption;
+	void commit() throws CommitException;
+	
 }
+
+
+
+
+
