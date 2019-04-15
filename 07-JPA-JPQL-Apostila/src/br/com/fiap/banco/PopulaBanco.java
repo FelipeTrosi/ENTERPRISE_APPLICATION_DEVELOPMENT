@@ -34,7 +34,7 @@ public class PopulaBanco {
 		 * INICIO da persistencia de 3 cidades 
 		 */
 		Cidade cidade1 = new Cidade("Londrina", "PR", 14, 350);
-		Cidade cidade2 = new Cidade("S„o Paulo", "SP", 11, 11000);
+		Cidade cidade2 = new Cidade("S√£o Paulo", "SP", 11, 11000);
 		Cidade cidade3 = new Cidade("Salvador", "BA", 19, 1080);
 		
 		CidadeDAO cidadeDAO = new CidadeDAOImpl(em);
@@ -131,7 +131,7 @@ public class PopulaBanco {
 		dtNasc4.set(2000, 0, 19);
 		List<Pacote> listPac4 = new ArrayList<>();
 		listPac4.add(pacote1);
-		Cliente cliente4 = new Cliente("Jo„o", "90028383848", dtNasc4, end4, listPac4);
+		Cliente cliente4 = new Cliente("Jo√£o", "90028383848", dtNasc4, end4, listPac4);
 		
 		//Cria um cliente com endere√ßo, data de nascimento 19/08/1083 e lista de pacotes com pacotes 1, 2, 3 e 4
 		Endereco end5 = new Endereco("Rua Lins de Vasconcelos", 12890000, cidade1);
@@ -174,6 +174,10 @@ public class PopulaBanco {
 		/**
 		 * FIM Persistencia de reservas
 		 */
+		
+		em.close();
+		EntityManagerFactorySingleton.getInstance().close();
+		
 		
 	}
 
