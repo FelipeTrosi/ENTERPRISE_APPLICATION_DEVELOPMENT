@@ -16,14 +16,15 @@ public class ClienteDAOImpl extends GenericDAOImpl<Cliente,Integer> implements C
 
 	@Override
 	public List<Cliente> pesquisar() {
-		TypedQuery<Cliente> query = em.createQuery("from Cliente",Cliente.class);
+		TypedQuery<Cliente> query = 
+				em.createQuery("from Cliente",Cliente.class);
 		return query.getResultList();
 	}
 
 	@Override
-	public List<Cliente> pesquisar(String nome) {
-		return em.createQuery("from Cliente c where c.nome like ;n",Cliente.class)
-				.setParameter("n", "%" + nome + "%")
+	public List<Cliente> pesquisar(String nome) {		
+		return em.createQuery("from Cliente c where c.nome like :n",Cliente.class)
+				.setParameter("n", "%" + nome + "%")				
 				.getResultList();
 	}
 
@@ -36,9 +37,31 @@ public class ClienteDAOImpl extends GenericDAOImpl<Cliente,Integer> implements C
 
 	@Override
 	public List<Cliente> pesquisarPorDiaReserva(int dias) {
-		return em.createQuery("select r.cliente from Reserva r where r.numeroDias = :d",Cliente.class)
+		return em.createQuery(
+			"select r.cliente from Reserva r where "
+				+ "r.numeroDias = :d",Cliente.class)
 				.setParameter("d", dias)
 				.getResultList();
 	}
 
+	@Override
+	public List<Cliente> buscar(String cliente, String cidade) {
+		return em.createQuery("from Cliente c where c.nome like :n"
+				+ " and c.endereco.cidade.nome like :c",Cliente.class)
+				.setParameter("n","%"+cliente+"%")
+				.setParameter("c", "%"+cidade+"%")
+				.getResultList();
+	}
+
+	@Override
+	public List<Cliente> buscarPorEstados(List<String> estados) {
+		return em.createQuery("from Cliente c where c.endereco.cidade.uf in :e",Cliente.class)
+				.setParameter("e", estados)
+				.getResultList();
+	}
+
 }
+
+
+
+

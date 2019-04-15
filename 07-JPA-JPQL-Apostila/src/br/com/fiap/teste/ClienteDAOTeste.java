@@ -3,11 +3,10 @@ package br.com.fiap.teste;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -23,8 +22,31 @@ class ClienteDAOTeste {
 	
 	@BeforeAll
 	public static void instanciar() {
-		EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
+		EntityManager em = EntityManagerFactorySingleton
+							.getInstance().createEntityManager();
 		dao = new ClienteDAOImpl(em);
+	}
+	@Test
+	void pesquisarPorEstad() {
+		List<String> estados =  new ArrayList<String>();
+		estados.add("SP");
+		estados.add("BH");
+		
+		List<Cliente> lista = dao.buscarPorEstados(estados);
+		
+		for(Cliente cliente : lista) {
+			assertTrue(estados.contains(cliente.getEndereco().getCidade().getUf()));
+		}
+		
+	}
+	
+	@Test
+	void pesquisarPorNomeCidadeTest() {
+		List<Cliente> lista = dao.buscar("Leandro","Lon");
+		
+		for(Cliente cliente : lista) {
+			assertTrue(cliente.getNome().contains("Lea") && cliente.getEndereco().getCidade().getNome().contains("Lon"));
+		}
 	}
 	
 	@Test
@@ -32,28 +54,35 @@ class ClienteDAOTeste {
 		List<Cliente> lista = dao.pesquisarPorDiaReserva(10);
 		assertEquals(4, lista.size());
 	}
-	/*
+	
+	@Test
+	void pesquisarPorEstadoTeste() {
+		List<Cliente> lista = dao.pesquisarPorEstado("BA");
+		
+		for (Cliente cliente : lista) {
+			assertEquals("BA", cliente.getEndereco().
+					getCidade().getUf());
+		}
+		
+	}
+	
+	@Test
+	void pesquisarPorNomeTeste() {
+		List<Cliente> lista = dao.pesquisar("Mar");
+		//valida se a lista de cliente está correta
+		for (Cliente cliente : lista) {
+			assertTrue(cliente.getNome().contains("Mar"));
+		}
+	}
+	
 	@Test
 	void pesquisarTeste() {
 		List<Cliente> lista = dao.pesquisar();
-		assertEquals(5, lista.size());
+		assertEquals(10, lista.size());
 	}
-	 */
-	/*@Test
-	void pesquisarPorNome() {
-		List<Cliente> lista = dao.pesquisar("Mar");
-		//valida se a lista de cliente está correta
-		for(Cliente cliente : lista) {
-			assertTrue(cliente.getNome().contains("Mar"));
-		}
-	}*/
-	
-	@Test
-	void pesquisarPorEstado() {
-		List<Cliente> lista = dao.pesquisarPorEstado("BA");
-		for (Cliente cliente : lista) {
-			assertEquals("BA", cliente.getEndereco().getCidade().getUf());
-		}
-	}
-	
+
 }
+
+
+
+
