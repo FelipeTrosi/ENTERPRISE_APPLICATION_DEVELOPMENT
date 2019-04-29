@@ -24,11 +24,36 @@ public class PacoteDAOImpl extends GenericDAOImpl<Pacote,Integer> implements Pac
 
 	@Override
 	public List<Pacote> buscarPorDatas(Calendar inicio, Calendar fim) {
-		return em.createQuery("from Pacote p where p.dataSaida between :I and :F",Pacote.class)
-		.setParameter("I", inicio)
-		.setParameter("F", fim)
-		.getResultList();
-	
+		return em.createQuery("from Pacote p where p.dataSaida "
+			+ "between :i and :f",Pacote.class)
+			.setParameter("i", inicio)
+			.setParameter("f", fim)
+			.getResultList();
+	}
+
+	@Override
+	public double somarPrecoPorTransporte(Transporte transporte) {
+		return em.createQuery("select sum(p.preco) from "
+				+ "Pacote p where p.transporte = :T",Double.class)
+				.setParameter("T", transporte)
+				.getSingleResult();
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Pacote> buscarPorPreco(double preco) {
+		return em.createNativeQuery("SELECT * FROM PACOTE WHERE "
+				+ "PRECO < :P", Pacote.class)
+				.setParameter("P", preco)
+				.getResultList();
 	}
 
 }
+
+
+
+
+
+
+
+

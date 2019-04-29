@@ -26,33 +26,51 @@ class ClienteDAOTeste {
 							.getInstance().createEntityManager();
 		dao = new ClienteDAOImpl(em);
 	}
+	
 	@Test
-	void pesquisarPorEstad() {
-		List<String> estados =  new ArrayList<String>();
+	void pesquisarPorCpfTest() {
+		Cliente cliente = dao.pesquisarPorCpf("98728018736");
+		assertEquals("98728018736", cliente.getCpf());
+	}
+	
+	@Test
+	void contarPorEstado() {
+		long qtd = dao.contarPorEstado("SP");
+		assertEquals(1, qtd);
+	}
+	
+	@Test
+	void pesquisarPorEstados() {
+		
+		List<String> estados = new ArrayList<String>();
 		estados.add("SP");
-		estados.add("BH");
+		estados.add("BA");
 		
-		List<Cliente> lista = dao.buscarPorEstados(estados);
+		List<Cliente> lista = dao.pesquisarPorEstados(estados);
 		
-		for(Cliente cliente : lista) {
-			assertTrue(estados.contains(cliente.getEndereco().getCidade().getUf()));
+		for (Cliente cliente : lista) {
+			assertTrue(estados.contains(cliente.getEndereco()
+											.getCidade().getUf()));
 		}
 		
 	}
 	
 	@Test
 	void pesquisarPorNomeCidadeTest() {
-		List<Cliente> lista = dao.buscar("Leandro","Lon");
 		
-		for(Cliente cliente : lista) {
-			assertTrue(cliente.getNome().contains("Lea") && cliente.getEndereco().getCidade().getNome().contains("Lon"));
+		List<Cliente> lista = dao.buscar("Lea","Lon");
+		
+		for (Cliente cliente : lista) {
+			assertTrue(cliente.getNome().contains("Lea") &&
+				cliente.getEndereco().getCidade().getNome().contains("Lon"));
 		}
+		
 	}
 	
 	@Test
 	void pesquisarPorDiasReserva() {
 		List<Cliente> lista = dao.pesquisarPorDiaReserva(10);
-		assertEquals(4, lista.size());
+		assertEquals(2, lista.size());
 	}
 	
 	@Test
@@ -68,7 +86,7 @@ class ClienteDAOTeste {
 	
 	@Test
 	void pesquisarPorNomeTeste() {
-		List<Cliente> lista = dao.pesquisar("Mar");
+		List<Cliente> lista = dao.pesquisar("mAr");
 		//valida se a lista de cliente está correta
 		for (Cliente cliente : lista) {
 			assertTrue(cliente.getNome().contains("Mar"));
@@ -78,7 +96,7 @@ class ClienteDAOTeste {
 	@Test
 	void pesquisarTeste() {
 		List<Cliente> lista = dao.pesquisar();
-		assertEquals(10, lista.size());
+		assertEquals(5, lista.size());
 	}
 
 }

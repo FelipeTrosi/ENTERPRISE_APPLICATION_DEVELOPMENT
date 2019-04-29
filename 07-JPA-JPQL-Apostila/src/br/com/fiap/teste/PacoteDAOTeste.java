@@ -1,7 +1,7 @@
 package br.com.fiap.teste;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -33,27 +33,42 @@ class PacoteDAOTeste {
 	}
 	
 	@Test
+	void buscarPorPrecoTest() {
+		List<Pacote> lista = pacoteDao.buscarPorPreco(1000);
+		for (Pacote pacote : lista) {
+			assertTrue(pacote.getPreco() < 1000);
+		}
+	}
+	
+	@Test
+	void somarPrecoPorTransporteTeste() {
+		Transporte transporte = transporteDao.pesquisar(1);
+		double total = pacoteDao.somarPrecoPorTransporte(transporte);
+		assertEquals(4300, total);
+	}
+	
+	@Test
+	void pesquisarPorDataTeste() {
+		
+		Calendar inicio = new GregorianCalendar(2017,Calendar.JANUARY,1);
+		Calendar fim = new GregorianCalendar(2018,Calendar.JANUARY,1);
+		
+		List<Pacote> lista = pacoteDao.buscarPorDatas(inicio, fim);
+		
+		for (Pacote pacote : lista) {
+			assertTrue(pacote.getDataSaida().after(inicio) &&
+					pacote.getDataSaida().before(fim));
+		}
+		
+	}
+	
+	@Test
 	void pesquisarPorTransporteTeste() {
 		Transporte transporte = transporteDao.pesquisar(1);
 		List<Pacote> lista = pacoteDao.pesquisar(transporte);
 		
 		for (Pacote pacote : lista) {
 			assertEquals(1, pacote.getTransporte().getId());
-		}
-		
-	}
-	
-	@Test
-	void buscarPelaData() {
-		Calendar inicio = new GregorianCalendar(2016,Calendar.JANUARY,1);
-		Calendar fim = new GregorianCalendar(2018,Calendar.JANUARY,1);
-		
-		List<Pacote> lista = pacoteDao.buscarPorDatas(
-				inicio,fim);
-		
-		for (Pacote pacote: lista) {
-			assertTrue(pacote.getDataSaida().after(inicio) && 
-					pacote.getDataSaida().before(fim));
 		}
 		
 	}
